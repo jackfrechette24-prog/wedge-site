@@ -117,6 +117,7 @@ export const interiorPage: NichePage = {
     paragraphs: [
       "Referrals and repeat customers are the best leads you'll ever get. They just don't show up on demand. When the calendar thins out, most dealers go back to mailers or another home show, and they wait to see what happens.",
       "Paid ads give you a source of new consults you can actually plan around. If you want to grow a window treatment business past what word of mouth can carry, you need demand that doesn't depend on who your last customer happened to talk to. That's the job. Month to month, no long-term contracts, and if we don't produce in month one, you can walk.",
+      "It also changes how you run your week. When new consults show up on your calendar without you chasing them, you can decide which products to push, plan your crew's schedule ahead of time, and stop discounting just to keep people busy in a slow month.",
     ],
   },
   caseStudy: {
@@ -225,6 +226,7 @@ export const exteriorPage: NichePage = {
     paragraphs: [
       "In much of the country, screen demand follows the weather. Buyers wake up in spring, your calendar fills, and by the time you feel the rush, you've already lost weeks. In the off-season, the phone goes quiet and you wonder how you'll keep the crew busy.",
       "We plan around your season and your capacity. In peak months, the goal is a full calendar without overwhelming your crew. Before peak, the goal is to have work lined up early. In markets with a long season, like Florida, there's less of a slow period to wait out. On the discovery call we'll look at your market and tell you what's realistic for it.",
+      "Capacity matters more here than in most trades. A motorized screen job takes real install time, and a backed-up crew means a homeowner who waits and starts to second-guess the purchase. Tell us how many jobs a month you can actually install, and we'll work toward that number instead of flooding you with appointments you can't serve. More booked projects only help if you can get them installed while the customer is still excited.",
     ],
   },
   caseStudy: {

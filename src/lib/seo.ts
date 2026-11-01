@@ -5,6 +5,8 @@ import { FOOTER, SITE_NAME, SITE_URL, SOCIAL_LINKS } from "@/content/site";
 import type { PageSeo, Video } from "@/content/types";
 
 const TITLE_LIMIT = 60;
+// Default share image. Pages with their own opengraph-image file override it.
+const DEFAULT_OG_IMAGE = "/opengraph-image";
 
 export function absoluteUrl(path: string) {
   return new URL(path, `${SITE_URL}/`).toString();
@@ -22,8 +24,8 @@ export function pageMetadata(seo: PageSeo, path: string, options?: { noindex?: b
     title: { absolute: title },
     description: seo.description,
     alternates: { canonical: absoluteUrl(path) },
-    openGraph: { title, description: seo.description, url: absoluteUrl(path), siteName: SITE_NAME, type: "website" },
-    twitter: { card: "summary_large_image", title, description: seo.description },
+    openGraph: { title, description: seo.description, url: absoluteUrl(path), siteName: SITE_NAME, type: "website", images: [DEFAULT_OG_IMAGE] },
+    twitter: { card: "summary_large_image", title, description: seo.description, images: [DEFAULT_OG_IMAGE] },
     robots: options?.noindex ? { index: false, follow: false } : undefined,
   };
 }

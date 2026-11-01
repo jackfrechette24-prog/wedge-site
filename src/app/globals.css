@@ -96,18 +96,21 @@ h3 {
   mask-image: linear-gradient(to bottom, black, transparent 70%);
 }
 
-/* Scroll reveal. Content stays visible if scripting is off. */
-@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
-  .reveal {
+/* Scroll reveal. */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-armed {
     opacity: 0;
     transform: translateY(14px);
-    transition:
-      opacity 0.6s var(--ease-out-soft),
-      transform 0.6s var(--ease-out-soft);
   }
-  .reveal.is-visible {
-    opacity: 1;
-    transform: none;
+  .reveal-visible {
+    animation: reveal-in 0.6s var(--ease-out-soft) backwards;
+  }
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
   }
 }
 

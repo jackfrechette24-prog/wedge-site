@@ -69,3 +69,11 @@ describe("structured data", () => {
     expect(data.mainEntity[0]?.acceptedAnswer.text).toBe("Yes. See results.");
   });
 });
+
+describe("share images", () => {
+  it("every page has a share image by default", () => {
+    const metadata = pageMetadata(privacySeo, "/privacy");
+    expect(metadata.openGraph?.images).toEqual(["/opengraph-image"]);
+    expect(metadata.twitter?.images).toEqual(["/opengraph-image"]);
+  });
+});

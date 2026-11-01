@@ -6,6 +6,9 @@ const LEGACY_REDIRECTS: { source: string; destination: string; permanent: boolea
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  outputFileTracingRoot: process.cwd(),
+  // Always put metadata in <head>, including on dynamic pages like /apply.
+  htmlLimitedBots: /.*/,
   images: {
     remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com" }],
   },
