@@ -1,9 +1,9 @@
 import { cn } from "@/lib/cn";
 
 /** The wedge: vertical edge on the right, hypotenuse rising left to right. Never flip or round it. */
-export function WedgeMark({ className }: { className?: string }) {
+export function WedgeMark({ className, decorative }: { className?: string; decorative?: boolean }) {
   return (
-    <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false" className={cn("fill-accent", className)}>
+    <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false" className={cn(decorative ? "fill-obsidian" : "fill-accent", className)}>
       <polygon points="0,100 100,100 100,0" />
     </svg>
   );

@@ -12,7 +12,7 @@ export function VideoPlaceholder({ label = "Video coming soon" }: { label?: stri
   return (
     <div className={`tone-graphite ${FRAME} flex items-center justify-center`}>
       <div className="grid-lines absolute inset-0" aria-hidden="true" />
-      <WedgeMark className="absolute bottom-0 right-0 h-3/5 w-auto opacity-90 [fill:var(--color-obsidian)]" />
+      <WedgeMark decorative className="absolute bottom-0 right-0 h-3/5 w-auto" />
       <p className="relative font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-mist sm:text-xs">{label}</p>
     </div>
   );

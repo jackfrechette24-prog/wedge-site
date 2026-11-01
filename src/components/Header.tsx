@@ -36,9 +36,11 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <ButtonLink href={CTAS.primary.href} className="hidden min-h-10 px-4 py-2 text-sm sm:inline-flex">
-            {CTAS.primary.label}
-          </ButtonLink>
+          <div className="hidden sm:block">
+            <ButtonLink href={CTAS.primary.href} className="min-h-10 px-4 py-2 text-sm">
+              {CTAS.primary.label}
+            </ButtonLink>
+          </div>
           <button
             type="button"
             className="flex size-11 items-center justify-center text-bone lg:hidden"

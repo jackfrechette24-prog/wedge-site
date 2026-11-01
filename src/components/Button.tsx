@@ -7,7 +7,7 @@ const base =
   "inline-flex min-h-12 items-center justify-center gap-2 rounded-sm px-6 py-3 text-[15px] font-medium transition-colors duration-200";
 
 const variants = {
-  primary: "bg-lime text-obsidian hover:bg-bone",
+  primary: "bg-lime text-obsidian hover:bg-ink hover:text-surface",
   secondary: "border border-line text-ink hover:border-accent hover:text-accent",
 };
 
