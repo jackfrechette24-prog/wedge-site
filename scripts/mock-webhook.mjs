@@ -1,4 +1,4 @@
-// Local stand-in for the CRM inbound webhook. Needs Node 22.18+.
+// Local stand-in for the CRM inbound webhook.
 //   pnpm mock:webhook                 listens on :4010 and accepts everything
 //   MOCK_FAIL=1 pnpm mock:webhook     starts in failing mode
 //   curl -X POST localhost:4010/fail  toggle failing mode on
@@ -8,10 +8,10 @@ import { createServer } from "node:http";
 
 const port = Number(process.env.PORT ?? 4010);
 let failing = process.env.MOCK_FAIL === "1";
-const received: unknown[] = [];
+const received = [];
 
 createServer((req, res) => {
-  const reply = (status: number, body: unknown) => {
+  const reply = (status, body) => {
     res.writeHead(status, { "content-type": "application/json" });
     res.end(JSON.stringify(body));
   };

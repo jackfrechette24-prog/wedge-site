@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["node_modules", "brand-assets", "tests", "vitest.config.ts", "drizzle.config.ts"]
+}

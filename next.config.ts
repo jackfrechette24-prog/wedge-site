@@ -9,6 +9,8 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: process.cwd(),
   // Always put metadata in <head>, including on dynamic pages like /apply.
   htmlLimitedBots: /.*/,
+  // Leaves test and tooling files out of the production type check, so the build doesn't need dev dependencies.
+  typescript: { tsconfigPath: "tsconfig.build.json" },
   images: {
     remotePatterns: [{ protocol: "https", hostname: "i.ytimg.com" }],
   },

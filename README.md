@@ -1,10 +1,10 @@
 # Wedge Acquisition website
 
-Next.js 15 (App Router), TypeScript, Tailwind CSS v4, Postgres on Neon with Drizzle, hosted on Vercel.
+Next.js 15 (App Router), TypeScript, Tailwind CSS v4, Postgres with Drizzle, hosted on Railway.
 
 ## Local setup
 
-Needs Node 22.18+ and pnpm.
+Needs Node 20+ and pnpm. For a database, use any local Postgres (`postgresql://localhost:5432/wedge`) or the public URL of a separate Railway environment, so test leads stay out of production.
 
 ```bash
 pnpm install
@@ -19,36 +19,65 @@ pnpm dev                     # http://localhost:3000
 | `pnpm lint` / `typecheck` / `test` | ESLint, TypeScript, Vitest |
 | `pnpm db:generate` | Create a new migration after editing `src/db/schema.ts` |
 | `pnpm db:migrate` | Apply migrations to `DATABASE_URL` |
+| `pnpm cron:retry` | Trigger the webhook retry job. Needs `NEXT_PUBLIC_SITE_URL` and `CRON_SECRET` |
 | `pnpm mock:webhook` | Fake CRM webhook on port 4010. Set `CRM_WEBHOOK_URL=http://localhost:4010/hook` |
 
 The mock can fail on command: `curl -X POST localhost:4010/fail`, then `curl -X POST localhost:4010/ok`. See what it received with `curl localhost:4010/received`.
 
-For local development, use a separate Neon branch so test leads stay out of production. The HTTP driver only talks to Neon. To use a plain local Postgres, put a Neon-compatible HTTP proxy in front of it and set `NEON_FETCH_ENDPOINT`.
+## Deploying to Railway
 
-## Neon setup
+The project has three services: the app, Postgres, and a cron job that retries failed leads.
 
-1. In Vercel, open your project, then **Storage**, then **Create Database**, and choose **Neon**. This adds `DATABASE_URL` to the project.
-2. Copy `DATABASE_URL` into `.env.local`.
-3. Run `pnpm db:migrate`. Run it again whenever a new file appears in `/drizzle`.
+### 1. App service
 
-## Deploying to Vercel
+1. Create a Railway project and choose **Deploy from GitHub repo**. Rename the service to `app`.
+2. `railway.json` sets the build command, the start command, the pre-deploy migration, and the healthcheck on `/`. These override the dashboard.
 
-1. Push the repo to GitHub and import it in Vercel. The framework preset is detected automatically.
-2. Add the environment variables below for Production, then redeploy. `NEXT_PUBLIC_*` values are baked in at build time, so changing one needs a redeploy.
-3. **Use the Pro plan.** `vercel.json` runs the retry job every 10 minutes, and Vercel rejects a deployment on Hobby when a cron runs more than once a day. Hobby is also limited to non-commercial use.
+`pnpm start` listens on `0.0.0.0` and on the `PORT` Railway provides.
 
-If you stay on Hobby for now, change the schedule in `vercel.json` to `0 8 * * *`. Failed leads then retry once a day, and you can use **Retry all failed** on `/admin/leads` in between.
+### 2. Postgres service
+
+1. In the project, choose **New**, then **Database**, then **PostgreSQL**. Keep the service name `Postgres`, because the variable reference below uses it.
+2. On the app service, set `DATABASE_URL` to `${{Postgres.DATABASE_URL}}`. This is the private network URL, which connects without SSL.
+
+Migrations run automatically before each deploy with `pnpm db:migrate`. If one fails, the deploy stops and the running version stays up.
+
+To run commands from your computer, copy `DATABASE_PUBLIC_URL` from the Postgres service. It connects with SSL automatically. Add `?sslmode=disable` or `?sslmode=require` to any URL to override the default.
+
+Turn on backups for the Postgres service, because this database is your lead backup. Backups depend on your Railway plan.
+
+### 3. Cron service
+
+1. Choose **New**, then **GitHub Repo**, and pick this repo again. Rename the service to `cron`.
+2. In the service's settings, set the **Config file path** to `/railway.cron.json`. **This step matters.** Without it, the service reads `railway.json` and tries to run a second copy of the website.
+3. Set these variables on the cron service:
+   - `NEXT_PUBLIC_SITE_URL` to `https://wedgeacquisition.com`
+   - `CRON_SECRET` to `${{app.CRON_SECRET}}`
+
+It runs `pnpm cron:retry` every 10 minutes (`*/10 * * * *`) and then exits. A run shows as failed in Railway if the retry job returns an error. Until your domain is live, set `NEXT_PUBLIC_SITE_URL` on this service to the app's Railway URL.
+
+### 4. Custom domain
+
+1. On the app service, open **Settings**, then **Networking**, then **Custom Domain**, and add `wedgeacquisition.com` and `www.wedgeacquisition.com`.
+2. Railway shows a `CNAME` target for each one. At your registrar, remove the records pointing to Lovable and add these. If your registrar doesn't support a `CNAME` at the root domain, use its `ALIAS` or `ANAME` record, or move DNS to a provider that flattens root CNAMEs, like Cloudflare.
+3. Wait for Railway to verify the domain and issue the certificate.
+4. If Lovable manages the domain itself, disconnect it in Lovable first. Lower the DNS TTL a day ahead if you can, and keep the Lovable site running until the new one is verified.
+5. Add any old Lovable URLs to `LEGACY_REDIRECTS` in `next.config.ts` so they keep their search traffic.
+
+Set `NEXT_PUBLIC_SITE_URL` to the final domain and redeploy, because `NEXT_PUBLIC_*` values are baked in at build time.
 
 ## Environment variables
 
+Set these on the **app** service unless noted.
+
 | Variable | Required | Purpose |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Yes | Canonical URLs, sitemap, share images. `https://wedgeacquisition.com` |
-| `DATABASE_URL` | Yes | Neon connection string. The lead backup |
+| `NEXT_PUBLIC_SITE_URL` | Yes | Canonical URLs, sitemap, share images. `https://wedgeacquisition.com`. Also needed on the cron service |
+| `DATABASE_URL` | Yes | `${{Postgres.DATABASE_URL}}`. The lead backup |
 | `CRM_WEBHOOK_URL` | Yes | Your CRM's inbound webhook |
 | `NEXT_PUBLIC_BOOKING_EMBED_URL` | Yes | Calendar URL embedded on `/book` |
 | `NEXT_PUBLIC_BOOKING_EMBED_SCRIPT` | No | Vendor script, usually for iframe auto-height |
-| `CRON_SECRET` | Yes | Protects the retry job. `openssl rand -hex 32`. Vercel sends it automatically |
+| `CRON_SECRET` | Yes | Protects the retry job. `openssl rand -hex 32`. Also needed on the cron service, as `${{app.CRON_SECRET}}` |
 | `IP_HASH_SALT` | Yes | Salt for IP hashes. `openssl rand -hex 32`. Don't change it later, or rate limits reset |
 | `ADMIN_USER`, `ADMIN_PASSWORD` | Yes | Login for `/admin/leads`. The page stays locked if these are empty |
 | `ALERT_SLACK_WEBHOOK_URL` | Recommended | Slack alerts on lead delivery problems |
@@ -58,16 +87,6 @@ If you stay on Hobby for now, change the schedule in `vercel.json` to `0 8 * * *
 | `NEXT_PUBLIC_GA_ID` | No | Google Analytics 4. Loads only if set |
 
 Missing required variables are logged as a loud error at startup, but the site still renders. If `DATABASE_URL` and `CRM_WEBHOOK_URL` are both missing in production, `/apply` shows a maintenance message with an email link.
-
-## Point wedgeacquisition.com at Vercel
-
-1. In Vercel, open **Settings**, then **Domains**, and add `wedgeacquisition.com` and `www.wedgeacquisition.com`.
-2. Vercel shows the DNS records to create. They are usually an `A` record for the apex and a `CNAME` for `www`. Use the exact values Vercel shows.
-3. At your domain registrar, remove the records pointing to Lovable and add the new ones. If Lovable manages the domain itself, disconnect it in Lovable first.
-4. Wait for Vercel to show the domain as valid and issue the certificate.
-5. Add any old Lovable URLs to `LEGACY_REDIRECTS` in `next.config.ts` so they keep their search traffic.
-
-Lower the DNS TTL a day ahead if you can, and keep the Lovable site running until the new one is verified.
 
 ## Connect the CRM webhook
 
@@ -143,12 +162,13 @@ Video slots: `HOME_VSL` and `PRECALL_VIDEO` in `site.ts`, `video` on each case s
 - [ ] Remove empty slots from `CLIENT_LOGOS`
 - [ ] The inbox in `CONTACT_EMAIL` exists and is monitored
 - [ ] Counsel has reviewed privacy and terms, and the "Template" notice is removed from `legal.ts`
-- [ ] All environment variables set in Vercel Production
-- [ ] `pnpm db:migrate` run against production
+- [ ] All environment variables set on the app and cron services
+- [ ] Pre-deploy migration succeeded in the app's deploy logs
+- [ ] Postgres backups turned on
 - [ ] Real test lead appears in `/admin/leads` as `sent` and in the CRM with all fields mapped
 - [ ] Test the failure path: temporarily break `CRM_WEBHOOK_URL`, submit, confirm the alert arrives and the lead shows `failed`, restore it, and click retry
 - [ ] Calendar prefill works, and booking lands on `/confirmed`
-- [ ] Cron job shows as active in Vercel, under **Settings**, then **Cron Jobs**
+- [ ] Cron service uses `/railway.cron.json`, and its latest run logs a `200` from the retry job
 - [ ] Meta and Google events fire on a real submission (Meta Events Manager test tool, GA4 DebugView)
 - [ ] Test leads deleted from the production database
 - [ ] Old Lovable URLs added to `LEGACY_REDIRECTS`

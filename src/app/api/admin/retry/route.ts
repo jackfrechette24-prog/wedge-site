@@ -3,7 +3,6 @@ import { deliverAll } from "@/lib/leads/retry";
 import { getLead, listUndelivered, retryDeps } from "@/lib/leads/store";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
 
 const BULK_LIMIT = 50;
 

@@ -4,44 +4,46 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=20.18"
+    "node": ">=20"
   },
   "packageManager": "pnpm@9.15.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -H 0.0.0.0",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "node scripts/migrate.ts",
+    "db:migrate": "node scripts/migrate.mjs",
     "db:studio": "drizzle-kit studio",
-    "mock:webhook": "node scripts/mock-webhook.ts"
+    "mock:webhook": "node scripts/mock-webhook.mjs",
+    "cron:retry": "node scripts/trigger-retry.mjs"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^1.2.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^22.20.5",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "drizzle-orm": "^0.45.4",
     "libphonenumber-js": "^1.13.15",
     "lucide-react": "^1.66.0",
     "next": "^15.5.28",
+    "pg": "^8.23.1",
+    "postcss": "^8.5.32",
     "react": "^19",
     "react-dom": "^19",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3",
     "zod": "^4.6.7"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.7",
-    "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "22",
-    "@types/react": "19",
-    "@types/react-dom": "19",
     "drizzle-kit": "^0.31.11",
     "eslint": "^9",
     "eslint-config-next": "^15.5.28",
-    "postcss": "^8.5.32",
-    "tailwindcss": "^4.3.3",
-    "typescript": "^5.9.3",
     "vitest": "^5.0.5"
   }
 }
