@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, CircleCheck } from "lucide-react";
 import { Button } from "@/components/Button";
-import { Eyebrow } from "@/components/Eyebrow";
 import { applyCopy as copy, CONSENT_TEXT, REVENUE_OPTIONS } from "@/content/flow";
 import { readAttribution } from "@/lib/attribution";
 import { cn } from "@/lib/cn";
@@ -17,6 +16,8 @@ import {
   afterQ3,
   previousStep,
   progressFor,
+  stepNumberFor,
+  TOTAL_STEPS,
   type Answers,
   type DisqualifyReason,
   type FlowStep,
@@ -41,19 +42,22 @@ function recordDisqualified(reason: DisqualifyReason, annualRevenue?: Revenue) {
   }
 }
 
+const QUESTION_CLASS = "headline text-[2.25rem] outline-none md:text-5xl";
+
 function AnswerButton({ children, onClick, selected }: { children: ReactNode; onClick: () => void; selected?: boolean }) {
+  const Icon = selected ? CircleCheck : ArrowRight;
   return (
     <button
       type="button"
       onClick={onClick}
       aria-pressed={selected}
       className={cn(
-        "group flex min-h-16 w-full items-center justify-between gap-4 rounded-sm border bg-graphite px-5 py-4 text-left text-lg font-medium transition-colors hover:border-lime",
-        selected ? "border-lime" : "border-line",
+        "group flex min-h-16 w-full items-center justify-between gap-4 rounded-[14px] border bg-obsidian/50 px-5 py-4 text-left text-lg font-semibold transition-colors hover:border-lime",
+        selected ? "border-lime" : "border-line-strong",
       )}
     >
       {children}
-      <ArrowRight className="size-5 shrink-0 text-mist transition-colors group-hover:text-lime" aria-hidden="true" />
+      <Icon className={cn("size-5 shrink-0 transition-colors group-hover:text-lime", selected ? "text-lime" : "text-mist")} aria-hidden="true" />
     </button>
   );
 }
@@ -82,7 +86,7 @@ function Field({
   const id = `field-${name}`;
   return (
     <div>
-      <label htmlFor={id} className="mb-2 block text-sm font-medium">{label}</label>
+      <label htmlFor={id} className="mb-2 block text-sm font-semibold">{label}</label>
       <input
         id={id}
         name={name}
@@ -95,8 +99,8 @@ function Field({
         aria-describedby={error ? `${id}-error` : undefined}
         onChange={(event) => onChange(event.target.value)}
         className={cn(
-          "min-h-12 w-full rounded-sm border bg-graphite px-4 text-base text-bone outline-none transition-colors focus:border-lime",
-          error ? "border-lime" : "border-line",
+          "h-[52px] w-full rounded-[10px] border bg-obsidian/60 px-4 text-base text-bone outline-none transition focus:border-lime focus:ring-2 focus:ring-lime/30",
+          error ? "border-lime" : "border-line-strong",
         )}
       />
       {error && <p id={`${id}-error`} className="mt-2 text-sm text-lime">{error}</p>}
@@ -241,20 +245,9 @@ export function ApplyForm() {
   const progress = progressFor(step);
 
   return (
-    <div className="mx-auto w-full max-w-2xl">
-      <div
-        role="progressbar"
-        aria-label={copy.eyebrow}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-valuenow={progress}
-        className="h-1 w-full bg-graphite"
-      >
-        <div className="h-full bg-lime transition-[width] duration-300" style={{ width: `${progress}%` }} />
-      </div>
-
-      <div className="flex h-14 items-center justify-between">
-        <Eyebrow>{copy.eyebrow}</Eyebrow>
+    <div className="surface-card featured-card mx-auto w-full max-w-[640px] p-5 sm:p-8">
+      <div className="flex h-11 items-center justify-between">
+        <p className="mono-label text-mist">{copy.stepLabel} {stepNumberFor(step)} / {TOTAL_STEPS}</p>
         {previous && (
           <button type="button" onClick={back} className="-mr-2 flex min-h-11 items-center gap-2 px-2 text-sm text-mist transition-colors hover:text-lime">
             <ArrowLeft className="size-4" aria-hidden="true" />
@@ -263,10 +256,21 @@ export function ApplyForm() {
         )}
       </div>
 
-      <div className="mt-6 min-h-[520px]">
+      <div
+        role="progressbar"
+        aria-label={copy.eyebrow}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={progress}
+        className="mt-2 h-1 w-full overflow-hidden rounded-full bg-graphite"
+      >
+        <div className="h-full rounded-full bg-lime transition-[width] duration-300" style={{ width: `${progress}%` }} />
+      </div>
+
+      <div className="mt-8 min-h-[440px]">
         {step === "q1" && (
           <>
-            <h1 ref={headingRef} tabIndex={-1} className="text-3xl outline-none md:text-5xl">{copy.q1.question}</h1>
+            <h1 ref={headingRef} tabIndex={-1} className={QUESTION_CLASS}>{copy.q1.question}</h1>
             <div className="mt-8 grid gap-3">
               <AnswerButton selected={answers.ownsCompany === true} onClick={() => go(afterQ1(true), { ...answers, ownsCompany: true })}>{copy.q1.yes}</AnswerButton>
               <AnswerButton onClick={() => go(afterQ1(false), { ...answers, ownsCompany: false })}>{copy.q1.no}</AnswerButton>
@@ -276,7 +280,7 @@ export function ApplyForm() {
 
         {step === "q2" && (
           <>
-            <h1 ref={headingRef} tabIndex={-1} className="text-3xl outline-none md:text-5xl">{copy.q2.question}</h1>
+            <h1 ref={headingRef} tabIndex={-1} className={QUESTION_CLASS}>{copy.q2.question}</h1>
             <div className="mt-8 grid gap-3">
               {REVENUE_OPTIONS.map((option) => (
                 <AnswerButton
@@ -299,7 +303,7 @@ export function ApplyForm() {
 
         {step === "q3" && (
           <>
-            <h1 ref={headingRef} tabIndex={-1} className="text-3xl outline-none md:text-5xl">{copy.q3.question}</h1>
+            <h1 ref={headingRef} tabIndex={-1} className={QUESTION_CLASS}>{copy.q3.question}</h1>
             <div className="mt-8 grid gap-3">
               <AnswerButton selected={answers.willingToInvest3k === true} onClick={() => go(afterQ3(true), { ...answers, willingToInvest3k: true })}>{copy.q3.yes}</AnswerButton>
               <AnswerButton onClick={() => go(afterQ3(false), { ...answers, willingToInvest3k: false })}>{copy.q3.no}</AnswerButton>
@@ -309,7 +313,7 @@ export function ApplyForm() {
 
         {step === "contact" && (
           <>
-            <h1 ref={headingRef} tabIndex={-1} className="text-3xl outline-none md:text-5xl">{copy.contact.title}</h1>
+            <h1 ref={headingRef} tabIndex={-1} className={QUESTION_CLASS}>{copy.contact.title}</h1>
             <p className="mt-3 text-lg text-muted">{copy.contact.intro}</p>
             <form noValidate onSubmit={submit} className="mt-8 space-y-5">
               <div className="grid gap-5 sm:grid-cols-2">

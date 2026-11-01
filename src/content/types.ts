@@ -18,3 +18,9 @@ export type PageSeo = {
 };
 
 export type TitledText = { title: string; body: string };
+
+/** One line of a headline. `accent` sets it in the italic serif with the gradient. */
+export type Segment = { text: string; accent?: boolean };
+export type Segments = Segment[];
+
+export type IconName = "target" | "phone-call" | "trending-up" | "blinds" | "sun";

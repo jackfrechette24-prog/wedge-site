@@ -1,5 +1,5 @@
 // Site-wide settings and copy. Edit values here, components pick them up.
-import type { Video } from "./types";
+import type { Segments, Video } from "./types";
 
 export const SITE_NAME = "Wedge Acquisition";
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://wedgeacquisition.com").replace(/\/$/, "");
@@ -21,26 +21,27 @@ export const TAGLINE = "More booked consults. More installs.";
 
 // Swap the hero headline by changing ACTIVE_HERO to "A", "B", or "C".
 export const HERO_VARIANTS = {
-  A: "Add an extra $500K to $1M a year to your window treatment business.",
-  B: "More booked consults. More installs. An extra $500K to $1M a year.",
-  C: "The marketing agency built for window treatment and exterior screen companies.",
-} as const;
+  A: [{ text: "ADD AN EXTRA" }, { text: "$500K to $1M", accent: true }, { text: "A YEAR IN NEW REVENUE." }],
+  B: [{ text: "MORE BOOKED CONSULTS. MORE INSTALLS." }, { text: "An extra $500K to $1M a year.", accent: true }],
+  C: [{ text: "THE MARKETING AGENCY" }, { text: "built for window treatment", accent: true }, { text: "AND EXTERIOR SCREEN COMPANIES." }],
+} satisfies Record<string, Segments>;
 export const ACTIVE_HERO: keyof typeof HERO_VARIANTS = "A";
 
-export const HERO_EYEBROW = "FOR WINDOW TREATMENT + EXTERIOR SCREEN COMPANIES";
+export const HERO_EYEBROW = "BUILT FOR WINDOW TREATMENT + SCREEN COMPANIES";
 export const HERO_SUBHEADLINE =
-  "We run Facebook and Instagram ads for blinds, shades, shutters, and retractable screen companies, then our team calls every lead and books the appointments onto your calendar. You show up and close.";
+  "We run Facebook and Instagram ads for blinds, shades, shutters, and retractable screen companies, then our team calls every lead and books the appointments onto your calendar. **You show up and close.**";
+
+// The two floating cards on the hero video.
+export const HERO_BADGES = {
+  top: { value: "$1M+", label: "ONE SCREEN CLIENT · 10 MONTHS" },
+  bottom: { value: "$158K", label: "60 DAYS" },
+};
 
 export const CTAS = {
   primary: { label: "See If You Qualify", href: "/apply" },
   secondary: { label: "See the results", href: "/case-studies" },
+  heroSecondary: { label: "See Real Results", href: "/#results" },
 } as const;
-
-export const STATS = [
-  { value: "$1M+", label: "revenue generated for one screen company in 10 months" },
-  { value: "$158K", label: "in 60 days for a Nashville shade + screen company" },
-  { value: "24 hours", label: "from launch to first leads" },
-] as const;
 
 // Word for word. Do not strengthen these.
 export const RISK_REVERSAL = [
@@ -50,20 +51,41 @@ export const RISK_REVERSAL = [
 ] as const;
 
 export const LOCATION_LINE = "Ontario-based. Serving window treatment and screen companies across the U.S.";
-export const LOCATION_SHORT = "Ontario-based, serving the U.S.";
+export const LOCATION_SHORT = "Ontario-based. Serving the U.S.";
 
 export const NAV = [
   { label: "How It Works", href: "/how-it-works" },
+  { label: "Results", href: "/case-studies" },
   { label: "Window Treatments", href: "/window-treatment-marketing" },
   { label: "Exterior Screens", href: "/retractable-screen-marketing" },
-  { label: "Results", href: "/case-studies" },
   { label: "FAQ", href: "/#faq" },
 ] as const;
 
 export const FOOTER = {
   description:
     "The marketing agency for window treatment and exterior screen companies. Facebook and Instagram ads, every lead called, appointments booked onto your calendar.",
-  columns: { pages: "Company", niches: "Who we serve", cases: "Results", legal: "Legal" },
+  tagline: "More booked consults. More installs.",
+  columns: [
+    {
+      title: "Company",
+      links: [
+        { label: "How It Works", href: "/how-it-works" },
+        { label: "Results", href: "/case-studies" },
+        { label: "FAQ", href: "/#faq" },
+      ],
+    },
+    {
+      title: "Industries",
+      links: [
+        { label: "Window Treatment Marketing", href: "/window-treatment-marketing" },
+        { label: "Retractable Screen Marketing", href: "/retractable-screen-marketing" },
+      ],
+    },
+    {
+      title: "Get Started",
+      links: [{ label: "See If You Qualify", href: "/apply" }],
+    },
+  ],
   disclaimer:
     "Results shown are from specific clients and are not typical of every business. Your results depend on your market, your offer, your capacity, and how you run your appointments. Past results do not promise future results.",
   legalLinks: [
@@ -72,21 +94,33 @@ export const FOOTER = {
   ],
 } as const;
 
+// TODO_FOUNDER: draft copy. Replace the paragraphs with your own story and add a photo.
+// TODO_STATS: confirm these numbers are current. Each one shows exactly as written here.
+export const FOUNDER = {
+  /** Path under /public, e.g. "/founder.jpg". null shows the placeholder frame. */
+  image: null as string | null,
+  imageAlt: "Founder of Wedge Acquisition",
+  photoLabel: "FOUNDER · ONTARIO, CANADA",
+  label: "WHY WE EXIST",
+  title: [{ text: "BUILT FOR" }, { text: "one industry", accent: true }, { text: "ONLY." }] satisfies Segments,
+  paragraphs: [
+    "Most agencies will take any business with a credit card. On Monday it's a dentist, on Tuesday a roofer, and on Wednesday they're learning what a cellular shade is on your dime.",
+    "**We picked one industry and stayed in it.** We only work with window treatment and exterior screen companies, so we already know how your buyer thinks, what a good consult looks like, and why a booked in-home appointment matters more than a click.",
+    "That focus is the whole point. **Your market, your products, your calendar.** Nothing else gets our attention.",
+  ],
+  stats: [
+    { value: "24+", label: "ACTIVE CLIENTS" },
+    { value: "2", label: "NICHES ONLY" },
+    { value: "US", label: "MARKETS SERVED" },
+  ],
+};
+
 // TODO_SOCIAL: add profile URLs. Empty entries are ignored in the footer and structured data.
 export const SOCIAL_LINKS: { label: string; href: string }[] = [
   { label: "LinkedIn", href: "" },
   { label: "Instagram", href: "" },
   { label: "Facebook", href: "" },
   { label: "YouTube", href: "" },
-];
-
-// Logo bar. Put logo files in /public/clients. src null shows the name in text.
-// name null shows an empty "[CLIENT LOGO]" slot. Remove empty slots before launch.
-export const CLIENT_LOGOS: { name: string | null; src: string | null }[] = [
-  { name: "Lightstyle Solutions", src: null },
-  { name: "Motorized Screens of Orlando", src: null },
-  { name: null, src: null },
-  { name: null, src: null },
 ];
 
 // Query params the booking calendar uses for prefill.

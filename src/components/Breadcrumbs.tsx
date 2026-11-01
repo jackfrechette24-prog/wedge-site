@@ -8,7 +8,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
   return (
     <>
       <JsonLd data={breadcrumbJsonLd(trail)} />
-      <nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+      <nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.14em] text-mist">
         <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
           {trail.map((crumb, index) => (
             <li key={crumb.path} className="flex items-center gap-2">
@@ -16,7 +16,7 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
               {index === trail.length - 1 ? (
                 <span aria-current="page" className="text-ink">{crumb.name}</span>
               ) : (
-                <Link href={crumb.path} className="inline-block py-1 transition-colors hover:text-accent">
+                <Link href={crumb.path} className="inline-block py-1 transition-colors hover:text-bone">
                   {crumb.name}
                 </Link>
               )}

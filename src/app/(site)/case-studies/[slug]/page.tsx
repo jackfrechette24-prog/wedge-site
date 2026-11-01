@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowRight } from "lucide-react";
-import { CompanyLogo, NicheTags } from "@/components/CaseStudyCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { Card } from "@/components/Card";
+import { CheckList } from "@/components/CheckList";
 import { Container } from "@/components/Container";
 import { CtaBand } from "@/components/CtaBand";
-import { Eyebrow } from "@/components/Eyebrow";
+import { FloatingBadge } from "@/components/FloatingBadge";
+import { Glow } from "@/components/Glow";
+import { Headline } from "@/components/Headline";
 import { JsonLd } from "@/components/JsonLd";
 import { Reveal } from "@/components/Reveal";
 import { Section } from "@/components/Section";
-import { StatBlock } from "@/components/StatBlock";
+import { SectionLabel } from "@/components/SectionLabel";
+import { StatCard } from "@/components/StatCard";
+import { TextLink } from "@/components/TextLink";
 import { VideoSlot } from "@/components/VideoPlayer";
-import { WedgeList } from "@/components/WedgeMark";
-import { caseStudies, getCaseStudy, nicheHref, STAT_LABELS, type CaseStudy } from "@/content/caseStudies";
+import { caseStudies, getCaseStudy, NICHE_LABELS, nicheHref, STAT_LABELS, type CaseStudy } from "@/content/caseStudies";
 import { caseStudiesCopy, caseStudyTemplateCopy as copy } from "@/content/results";
 import { articleJsonLd, pageMetadata, videoJsonLd } from "@/lib/seo";
 
@@ -56,8 +57,7 @@ export default async function CaseStudyPage({ params }: Props) {
     <>
       <JsonLd data={video ? [articleJsonLd(study), video] : articleJsonLd(study)} />
 
-      <section className="relative overflow-hidden border-b border-line pb-14 pt-8 md:pb-20 md:pt-10">
-        <div className="grid-lines pointer-events-none absolute inset-0" aria-hidden="true" />
+      <section className="relative overflow-x-clip border-b border-line pb-20 pt-6 lg:pb-28 lg:pt-8">
         <Container className="relative">
           <Breadcrumbs
             items={[
@@ -65,31 +65,45 @@ export default async function CaseStudyPage({ params }: Props) {
               { name: study.company, path: `/case-studies/${study.slug}` },
             ]}
           />
-          <div className="mt-10 max-w-4xl md:mt-16">
-            <Eyebrow className="mb-5">{study.city}, {study.state}</Eyebrow>
-            <h1 className="text-[2.5rem] text-accent sm:text-5xl md:text-[4rem]">{study.headlineMetric}</h1>
-            <CompanyLogo study={study} className="mt-6 text-xl font-medium md:text-2xl" />
-            {study.alsoKnownAs && (
-              <p className="mt-1 text-muted">{copy.alsoKnownAsLabel} {study.alsoKnownAs}</p>
-            )}
-            {study.owner && (
-              <p className="mt-1 text-muted">{copy.ownerLabel}: {study.owner}</p>
-            )}
-            <div className="mt-6">
-              <NicheTags study={study} />
+          <div className="mt-10 grid items-center gap-12 lg:mt-14 lg:grid-cols-12 lg:gap-14">
+            <div className="min-w-0 lg:col-span-5">
+              <p className="mono-label mb-5 text-mist">{study.city}, {study.state}</p>
+              <Headline segments={study.headline} as="h1" size={1} />
+              {study.logo ? (
+                <Image src={study.logo} alt={`${study.company} ${caseStudiesCopy.logoAlt}`} width={160} height={48} className="mt-6 h-10 w-auto object-contain" />
+              ) : (
+                <p className="mt-6 text-xl font-semibold">{study.company}</p>
+              )}
+              {study.alsoKnownAs && <p className="mt-1 text-muted">{copy.alsoKnownAsLabel} {study.alsoKnownAs}</p>}
+              {study.owner && <p className="mt-1 text-muted">{copy.ownerLabel}: {study.owner}</p>}
+              <ul className="mt-6 flex flex-wrap gap-2">
+                {study.niches.map((niche) => (
+                  <li key={niche} className="mono-pill">{NICHE_LABELS[niche]}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="relative min-w-0 lg:col-span-7">
+              <Glow className="left-1/2 top-1/2 w-[130%] -translate-x-1/2 -translate-y-1/2" />
+              <div className="relative">
+                <VideoSlot video={study.video} />
+                {study.stats.revenue && (
+                  <FloatingBadge
+                    value={study.stats.revenue}
+                    label={study.stats.timeframe ?? STAT_LABELS.revenue}
+                    className="-bottom-5 right-2 lg:-bottom-6 lg:-right-4"
+                  />
+                )}
+              </div>
             </div>
           </div>
         </Container>
       </section>
 
-      <Section className="!py-12 md:!py-16">
-        <VideoSlot video={study.video} />
-      </Section>
-
-      <Section tone="light">
-        <div className="grid gap-12 md:grid-cols-2 md:gap-16">
+      <Section>
+        <div className="grid gap-12 md:grid-cols-2 lg:gap-16">
           <Reveal>
-            <h2 className="text-3xl md:text-4xl">{copy.situation}</h2>
+            <SectionLabel className="mb-6">{copy.situation.label}</SectionLabel>
+            <h2 className="headline headline-3">{copy.situation.title}</h2>
             <div className="mt-6 space-y-4 text-lg text-muted">
               {study.situation.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
@@ -97,47 +111,42 @@ export default async function CaseStudyPage({ params }: Props) {
             </div>
           </Reveal>
           <Reveal delay={80}>
-            <h2 className="text-3xl md:text-4xl">{copy.whatWeDid}</h2>
-            <WedgeList items={study.whatWeDid} className="mt-6 text-lg text-muted" />
+            <SectionLabel className="mb-6">{copy.whatWeDid.label}</SectionLabel>
+            <h2 className="headline headline-3">{copy.whatWeDid.title}</h2>
+            <CheckList items={study.whatWeDid} className="mt-6 text-lg text-muted" />
           </Reveal>
         </div>
       </Section>
 
       {stats.length > 0 && (
-        <Section title={copy.results}>
-          <div className="grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
-            {stats.map((stat) => (
-              <StatBlock key={stat.key} value={stat.value} label={stat.label} className="bg-surface p-6 md:p-8" />
+        <Section label={copy.results.label} title={copy.results.title} glow="center" className="!pt-0">
+          <div className="grid gap-4 min-[480px]:grid-cols-2 lg:grid-cols-3">
+            {stats.map((stat, index) => (
+              <Reveal key={stat.key} delay={index * 60}>
+                <StatCard value={stat.value} label={stat.label} className="h-full" />
+              </Reveal>
             ))}
           </div>
         </Section>
       )}
 
       {study.quote && (
-        <Section tone="graphite">
+        <Section label={copy.quoteLabel} className="!pt-0">
           <Reveal>
-            <Card className="border-0 bg-transparent p-0 md:p-0">
-              <blockquote>
-                <p className="max-w-4xl text-3xl font-medium leading-tight tracking-[-0.02em] md:text-5xl">{study.quote.text}</p>
-                <footer className="mt-6 text-muted">{study.quote.name}, {study.quote.role}</footer>
-              </blockquote>
-            </Card>
+            <blockquote>
+              <p className="max-w-4xl font-accent text-4xl italic leading-[1.1] md:text-6xl">{study.quote.text}</p>
+              <footer className="mt-6 text-muted">{study.quote.name}, {study.quote.role}</footer>
+            </blockquote>
           </Reveal>
         </Section>
       )}
 
-      <Section tone="light" className="!py-12">
-        <div className="flex flex-wrap gap-x-8 gap-y-2">
-          <Link href={nicheLink} className="inline-flex min-h-11 items-center gap-2 font-medium transition-colors hover:text-accent">
-            {copy.nicheLinkLabel[study.niches.includes("interior") ? "interior" : "exterior"]}
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </Link>
-          <Link href="/case-studies" className="inline-flex min-h-11 items-center gap-2 font-medium transition-colors hover:text-accent">
-            {copy.backLink}
-            <ArrowRight className="size-4" aria-hidden="true" />
-          </Link>
-        </div>
-      </Section>
+      <section className="border-t border-line py-8">
+        <Container className="flex flex-wrap gap-x-8 gap-y-2">
+          <TextLink href={nicheLink}>{copy.nicheLinkLabel[study.niches.includes("interior") ? "interior" : "exterior"]}</TextLink>
+          <TextLink href="/case-studies">{copy.backLink}</TextLink>
+        </Container>
+      </section>
 
       <CtaBand title={copy.ctaTitle} note={copy.ctaNote} />
     </>

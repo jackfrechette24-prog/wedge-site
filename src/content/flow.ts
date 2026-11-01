@@ -1,5 +1,5 @@
 // Copy for /apply, /book, /confirmed, /not-a-fit, and the 404 page.
-import type { PageSeo } from "./types";
+import type { PageSeo, Segments } from "./types";
 
 export const CONSENT_TEXT =
   "I agree to be contacted by Wedge Acquisition by phone, SMS, and email about my inquiry. Message and data rates may apply. Reply STOP to opt out.";
@@ -22,6 +22,8 @@ export const VALIDATION_MESSAGES = {
   consent: "Please check this box so we can contact you.",
 };
 
+export const applyHeadline: Segments = [{ text: "SEE IF YOU" }, { text: "qualify.", accent: true }];
+
 export const applySeo: PageSeo = {
   title: "See If You Qualify",
   description: "Answer a few quick questions to see if Wedge Acquisition is a fit for your window treatment or screen company. Takes 30 seconds.",
@@ -30,6 +32,7 @@ export const applySeo: PageSeo = {
 export const applyCopy = {
   eyebrow: "SEE IF YOU QUALIFY",
   back: "Back",
+  stepLabel: "STEP",
   q1: {
     question: "Do you own a window treatment or exterior retractable screen company?",
     yes: "Yes",
@@ -56,7 +59,7 @@ export const applyCopy = {
     retrying: "Something went wrong, retrying...",
   },
   maintenance: {
-    title: "We're doing some quick maintenance.",
+    title: [{ text: "WE'RE DOING SOME" }, { text: "quick maintenance.", accent: true }] satisfies Segments,
     body: "The form is down for a moment. Email us and we'll get back to you personally.",
     linkLabel: "Email us",
   },
@@ -69,7 +72,7 @@ export const bookSeo: PageSeo = {
 
 export const bookCopy = {
   eyebrow: "ONE LAST STEP",
-  title: "Pick a time that works.",
+  title: [{ text: "PICK A TIME" }, { text: "that works.", accent: true }] satisfies Segments,
   body: "15 to 30 minute call. No pressure, we'll tell you straight if it's a fit.",
   calendarTitle: "Booking calendar",
   noCalendar: {
@@ -86,7 +89,7 @@ export const confirmedSeo: PageSeo = {
 
 export const confirmedCopy = {
   eyebrow: "CONFIRMED",
-  title: "You're booked.",
+  title: [{ text: "YOU'RE" }, { text: "booked.", accent: true }] satisfies Segments,
   nextTitle: "What happens next",
   next: [
     "You'll get a confirmation with the call details by email and text.",
@@ -106,7 +109,7 @@ export const notAFitSeo: PageSeo = {
 
 export const notAFitCopy = {
   eyebrow: "THANKS FOR CHECKING",
-  title: "We're not the right fit right now.",
+  title: [{ text: "WE'RE NOT THE RIGHT FIT" }, { text: "right now.", accent: true }] satisfies Segments,
   reasons: {
     not_owner:
       "This is built for owners of window treatment and screen companies. If you're passing this along to your boss, send them this page.",
@@ -119,7 +122,7 @@ export const notAFitCopy = {
 
 export const notFoundCopy = {
   eyebrow: "404",
-  title: "This page doesn't exist.",
+  title: [{ text: "THIS PAGE" }, { text: "doesn't exist.", accent: true }] satisfies Segments,
   body: "It may have moved. Head back home and we'll get you where you need to go.",
   link: "Back to home",
 };

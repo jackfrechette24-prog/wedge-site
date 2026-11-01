@@ -1,9 +1,9 @@
 import { cn } from "@/lib/cn";
 
 /** The wedge: vertical edge on the right, hypotenuse rising left to right. Never flip or round it. */
-export function WedgeMark({ className, decorative }: { className?: string; decorative?: boolean }) {
+export function WedgeMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false" className={cn(decorative ? "fill-obsidian" : "fill-accent", className)}>
+    <svg viewBox="0 0 100 100" aria-hidden="true" focusable="false" className={cn("aspect-square fill-lime", className)}>
       <polygon points="0,100 100,100 100,0" />
     </svg>
   );
@@ -19,14 +19,5 @@ export function WedgeList({ items, className }: { items: readonly string[]; clas
         </li>
       ))}
     </ul>
-  );
-}
-
-export function WedgeDivider({ className }: { className?: string }) {
-  return (
-    <div className={cn("flex items-end gap-3", className)} aria-hidden="true">
-      <WedgeMark className="size-3" />
-      <div className="h-px flex-1 bg-line" />
-    </div>
   );
 }

@@ -1,6 +1,6 @@
 // Case studies. Add an object to the array and the index, detail page, sitemap, and
 // structured data all update. Any stat left null is hidden.
-import type { Video } from "./types";
+import type { Segments, Video } from "./types";
 
 export type Niche = "interior" | "exterior";
 
@@ -13,6 +13,8 @@ export type CaseStudy = {
   state: string;
   niches: Niche[];
   headlineMetric: string;
+  /** The headline metric, split up for the case study page and share image. */
+  headline: Segments;
   summary: string;
   situation: string[];
   whatWeDid: string[];
@@ -29,6 +31,8 @@ export type CaseStudy = {
   /** Path under /public, e.g. "/clients/lightstyle.svg". */
   logo: string | null;
   video: Video;
+  /** Path under /public for the video card image. Falls back to the video's own thumbnail. */
+  poster: string | null;
   featuredOnHome: boolean;
   /** ISO date, used in structured data and the sitemap. */
   publishedAt: string;
@@ -59,6 +63,7 @@ export const caseStudies: CaseStudy[] = [
     state: "FL",
     niches: ["exterior"],
     headlineMetric: "$1M+ in revenue in 10 months",
+    headline: [{ text: "$1M+", accent: true }, { text: "IN REVENUE IN 10 MONTHS" }],
     summary: "An Orlando exterior motorized screen company generated over $1M in revenue in 10 months on under $15K in ad spend.",
     // TODO_CASE_STUDY: replace with the real story. Where was the business before you started?
     situation: [
@@ -81,6 +86,7 @@ export const caseStudies: CaseStudy[] = [
     quote: null, // TODO_QUOTE
     logo: null, // TODO_LOGO
     video: null, // TODO_VIDEO
+    poster: null, // TODO_POSTER
     featuredOnHome: true,
     publishedAt: "2026-11-01",
   },
@@ -93,6 +99,7 @@ export const caseStudies: CaseStudy[] = [
     state: "TN",
     niches: ["interior", "exterior"],
     headlineMetric: "$158K in revenue in the first 60 days",
+    headline: [{ text: "$158K", accent: true }, { text: "IN REVENUE IN THE FIRST 60 DAYS" }],
     summary: "A Nashville interior shade and exterior retractable screen company generated $158K in revenue in its first 60 days with us.",
     // TODO_CASE_STUDY: replace with the real story. Where was the business before you started?
     situation: [
@@ -115,6 +122,7 @@ export const caseStudies: CaseStudy[] = [
     quote: null, // TODO_QUOTE
     logo: null, // TODO_LOGO
     video: null, // TODO_VIDEO
+    poster: null, // TODO_POSTER
     featuredOnHome: true,
     publishedAt: "2026-11-01",
   },

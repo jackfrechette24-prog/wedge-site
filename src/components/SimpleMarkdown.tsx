@@ -9,10 +9,10 @@ function renderInline(text: string): ReactNode[] {
   for (const match of text.matchAll(INLINE)) {
     if (match.index > last) nodes.push(text.slice(last, match.index));
     if (match[1]) {
-      nodes.push(<strong key={match.index} className="font-medium text-ink">{match[1]}</strong>);
+      nodes.push(<strong key={match.index} className="font-semibold text-ink">{match[1]}</strong>);
     } else if (match[2] && match[3]) {
       nodes.push(
-        <Link key={match.index} href={match[3]} className="underline underline-offset-4 hover:text-accent">
+        <Link key={match.index} href={match[3]} className="underline underline-offset-4 hover:text-lime">
           {match[2]}
         </Link>,
       );

@@ -11,9 +11,9 @@ export default function CaseStudiesPage() {
   return (
     <>
       <PageHero crumbs={[{ name: copy.breadcrumb, path: "/case-studies" }]} eyebrow={copy.eyebrow} title={copy.h1}>
-        <p className="mt-6 max-w-3xl text-lg text-muted md:text-xl">{copy.intro}</p>
+        <p className="mt-6 max-w-3xl text-lg text-muted">{copy.intro}</p>
       </PageHero>
-      <Section tone="light">
+      <Section>
         <CaseStudyGrid />
       </Section>
       <CtaBand title={caseStudyTemplateCopy.ctaTitle} note={caseStudyTemplateCopy.ctaNote} />

@@ -1,20 +1,24 @@
-import { CTAS } from "@/content/site";
+import { CTAS, RISK_REVERSAL } from "@/content/site";
+import type { Segments } from "@/content/types";
 import { ButtonLink } from "./Button";
 import { Container } from "./Container";
+import { Glow } from "./Glow";
+import { Headline } from "./Headline";
 import { Reveal } from "./Reveal";
-import { WedgeMark } from "./WedgeMark";
+import { TrustRow } from "./TrustRow";
 
-export function CtaBand({ title, note }: { title: string; note?: string }) {
+export function CtaBand({ title, note }: { title: Segments; note?: string }) {
   return (
-    <section className="tone-graphite relative overflow-hidden py-20 md:py-32">
-      <WedgeMark decorative className="absolute bottom-0 right-0 h-full w-auto" />
+    <section className="relative overflow-x-clip border-t border-line py-20 text-center lg:py-40">
+      <Glow className="left-1/2 top-1/2 w-[min(1000px,140vw)] -translate-x-1/2 -translate-y-1/2" />
       <Container className="relative">
-        <Reveal className="max-w-2xl">
-          <h2 className="text-4xl md:text-6xl">{title}</h2>
-          <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
+        <Reveal className="flex flex-col items-center">
+          <Headline segments={title} />
+          {note && <p className="mt-6 text-lg text-muted">{note}</p>}
+          <div className="mt-8">
             <ButtonLink href={CTAS.primary.href} arrow>{CTAS.primary.label}</ButtonLink>
-            {note && <p className="font-mono text-xs uppercase tracking-[0.14em] text-mist">{note}</p>}
           </div>
+          <TrustRow items={RISK_REVERSAL} className="mt-10 justify-center text-left" />
         </Reveal>
       </Container>
     </section>

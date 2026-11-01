@@ -38,8 +38,8 @@ export function BookingEmbed() {
 
   if (ready && !EMBED_URL) {
     return (
-      <div className="rounded-sm border border-line bg-graphite p-6 md:p-10">
-        <h2 className="text-2xl">{copy.noCalendar.title}</h2>
+      <div className="surface-card featured-card p-6 md:p-10">
+        <h2 className="card-title">{copy.noCalendar.title}</h2>
         <p className="mt-3 text-muted">{copy.noCalendar.body}</p>
         <a href={`mailto:${CONTACT_EMAIL}`} className="mt-4 inline-flex min-h-11 items-center underline underline-offset-4 hover:text-lime">
           {copy.noCalendar.linkLabel}
@@ -49,7 +49,7 @@ export function BookingEmbed() {
   }
 
   return (
-    <div className="min-h-[900px] overflow-hidden rounded-sm border border-line bg-bone">
+    <div className="min-h-[900px] overflow-hidden rounded-[22px] border border-line-strong bg-bone">
       {src && <iframe src={src} title={copy.calendarTitle} className="h-[900px] w-full border-0" />}
       {src && EMBED_SCRIPT && <Script src={EMBED_SCRIPT} strategy="afterInteractive" />}
     </div>

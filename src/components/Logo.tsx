@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { SITE_NAME } from "@/content/site";
 
-export function Logo({ tone = "dark", className }: { tone?: "dark" | "light"; className?: string }) {
+export function Logo({ className }: { className?: string }) {
   return (
     <Image
-      src={tone === "dark" ? "/brand/wedge_primary_dark.svg" : "/brand/wedge_primary_light.svg"}
+      src="/brand/wedge_primary_dark.svg"
       alt={SITE_NAME}
       width={359}
       height={95}

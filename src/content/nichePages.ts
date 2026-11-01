@@ -1,11 +1,11 @@
 // Copy for the two main SEO pages.
 import type { Niche } from "./caseStudies";
 import type { FaqPage } from "./faqs";
-import type { PageSeo } from "./types";
+import type { PageSeo, Segments } from "./types";
 
 type TextSection = {
-  eyebrow: string;
-  title: string;
+  label: string;
+  title: Segments;
   paragraphs: string[];
   bullets?: string[];
   subsections?: { title: string; body: string }[];
@@ -18,17 +18,17 @@ export type NichePage = {
   niche: Niche;
   faqPage: FaqPage;
   eyebrow: string;
-  h1: string;
+  h1: Segments;
   intro: string[];
   whyFail: TextSection;
   whatWeRun: TextSection;
   whoWeWorkWith: TextSection;
   extra: TextSection;
-  caseStudy: { eyebrow: string; title: string; intro: string };
-  process: { eyebrow: string; title: string; intro: string; link: string };
-  crossLink: { title: string; body: string; label: string; href: string };
-  faq: { eyebrow: string; title: string };
-  cta: { title: string; note: string };
+  caseStudy: { label: string; title: Segments; intro: string };
+  process: { label: string; title: Segments; intro: string; link: string };
+  crossLink: { title: Segments; body: string; label: string; href: string };
+  faq: { label: string; title: Segments };
+  cta: { title: Segments; note: string };
 };
 
 export const interiorPage: NichePage = {
@@ -42,14 +42,14 @@ export const interiorPage: NichePage = {
   niche: "interior",
   faqPage: "interior",
   eyebrow: "FOR BLINDS, SHADES, SHUTTERS + DRAPERY",
-  h1: "Marketing for Window Treatment Companies",
+  h1: [{ text: "Marketing for" }, { text: "window treatment", accent: true }, { text: "companies" }],
   intro: [
-    "Marketing for window treatment companies should do one thing: put more in-home consults on your calendar. We run Facebook and Instagram ads for blinds, shades, shutters, and drapery companies, then our team calls every lead and books the appointment. You show up and close.",
-    "We only work with window treatment and screen companies. If you've been trying to grow a window treatment business with referrals, home shows, and an agency that also does dentists and roofers, this page is for you.",
+    "Marketing for window treatment companies should do one thing: put more in-home consults on your calendar. We run Facebook and Instagram ads for blinds, shades, shutters, and drapery companies, then our team calls every lead and books the appointment. **You show up and close.**",
+    "**We only work with window treatment and screen companies.** If you've been trying to grow a window treatment business with referrals, home shows, and an agency that also does dentists and roofers, this page is for you.",
   ],
   whyFail: {
-    eyebrow: "01 / THE PROBLEM",
-    title: "Why generic agencies fail window treatment dealers.",
+    label: "THE PROBLEM",
+    title: [{ text: "Why generic agencies fail" }, { text: "window treatment dealers.", accent: true }],
     paragraphs: [
       "Most marketing for blind companies gets built by people who have never been on a consult. They run the same playbook they run for everyone else, and then they send you a report full of clicks. The report looks fine. Your calendar doesn't.",
       "Window treatments aren't an impulse buy, and they aren't a commodity if you sell them right. Your buyer just moved in, finished a remodel, or got tired of the sun fading the floor. They want someone to come out, measure, and show them samples. Selling that in-home appointment takes a different message than selling a $40 online blind.",
@@ -70,8 +70,8 @@ export const interiorPage: NichePage = {
     ],
   },
   whatWeRun: {
-    eyebrow: "02 / WHAT WE RUN",
-    title: "Facebook ads for blind companies, and everything else you sell.",
+    label: "WHAT WE RUN",
+    title: [{ text: "Facebook ads for blind companies," }, { text: "and everything else you sell.", accent: true }],
     paragraphs: [
       "Your buyer is a homeowner in your service area, scrolling on their phone at night, thinking about the room that still has builder-grade blinds. Facebook and Instagram are where you can reach them before they ever search. That's why our window treatment marketing starts there.",
       "We write and produce the ads, built around your market and the products you want to sell more of:",
@@ -95,8 +95,8 @@ export const interiorPage: NichePage = {
     ],
   },
   whoWeWorkWith: {
-    eyebrow: "03 / WHO WE WORK WITH",
-    title: "Franchise owners and independent dealers.",
+    label: "WHO WE WORK WITH",
+    title: [{ text: "Franchise owners" }, { text: "and independent dealers.", accent: true }],
     paragraphs: [
       "We work with owner-operators across the U.S., typically doing $500K or more a year. If you're the person who decides how the business grows, you're who we built this for.",
     ],
@@ -112,8 +112,8 @@ export const interiorPage: NichePage = {
     ],
   },
   extra: {
-    eyebrow: "04 / SLOW SEASON",
-    title: "Stop waiting on referrals to fill your slow months.",
+    label: "SLOW SEASON",
+    title: [{ text: "Stop waiting on referrals" }, { text: "to fill your slow months.", accent: true }],
     paragraphs: [
       "Referrals and repeat customers are the best leads you'll ever get. They just don't show up on demand. When the calendar thins out, most dealers go back to mailers or another home show, and they wait to see what happens.",
       "Paid ads give you a source of new consults you can actually plan around. If you want to grow a window treatment business past what word of mouth can carry, you need demand that doesn't depend on who your last customer happened to talk to. That's the job. Month to month, no long-term contracts, and if we don't produce in month one, you can walk.",
@@ -121,24 +121,24 @@ export const interiorPage: NichePage = {
     ],
   },
   caseStudy: {
-    eyebrow: "05 / RESULTS",
-    title: "What this looks like in a real market.",
+    label: "RESULTS",
+    title: [{ text: "What this looks like" }, { text: "in a real market.", accent: true }],
     intro: "Lightstyle Solutions sells interior shades and exterior retractable screens in Nashville.",
   },
   process: {
-    eyebrow: "06 / THE PROCESS",
-    title: "Five steps from first call to first leads.",
+    label: "THE PROCESS",
+    title: [{ text: "Five steps from first call" }, { text: "to first leads.", accent: true }],
     intro: "Launch is about 3 days after onboarding, and first leads typically come in within 24 hours of launch.",
     link: "See the full process",
   },
   crossLink: {
-    title: "Also sell exterior screens?",
+    title: [{ text: "Also sell" }, { text: "exterior screens?", accent: true }],
     body: "We run those as a separate effort so each product gets the right message.",
     label: "Marketing for retractable screen companies",
     href: "/retractable-screen-marketing",
   },
-  faq: { eyebrow: "FAQ", title: "Window treatment marketing questions." },
-  cta: { title: "Ready for more booked consults?", note: "Takes 30 seconds." },
+  faq: { label: "FAQ", title: [{ text: "Window treatment" }, { text: "marketing questions.", accent: true }] },
+  cta: { title: [{ text: "Ready for" }, { text: "more booked consults?", accent: true }], note: "Takes 30 seconds." },
 };
 
 export const exteriorPage: NichePage = {
@@ -152,14 +152,14 @@ export const exteriorPage: NichePage = {
   niche: "exterior",
   faqPage: "exterior",
   eyebrow: "FOR RETRACTABLE + MOTORIZED SCREENS",
-  h1: "Marketing for Retractable and Motorized Screen Companies",
+  h1: [{ text: "Marketing for" }, { text: "retractable and motorized", accent: true }, { text: "screen companies" }],
   intro: [
-    "Marketing for retractable screen companies comes down to one number: booked in-home appointments with homeowners who can afford the job. We run Facebook and Instagram ads for exterior screen companies, then our team calls every lead and books the appointment onto your calendar. You show up and close.",
-    "One Orlando screen company generated over $1M in revenue in 10 months on under $15K in ad spend. We only work with window treatment and screen companies, so we already know what your buyer wants to hear.",
+    "Marketing for retractable screen companies comes down to one number: booked in-home appointments with homeowners who can afford the job. We run Facebook and Instagram ads for exterior screen companies, then our team calls every lead and books the appointment onto your calendar. **You show up and close.**",
+    "**One Orlando screen company generated over $1M in revenue in 10 months on under $15K in ad spend.** We only work with window treatment and screen companies, so we already know what your buyer wants to hear.",
   ],
   whyFail: {
-    eyebrow: "01 / THE PROBLEM",
-    title: "Why general agencies waste a screen company's money.",
+    label: "THE PROBLEM",
+    title: [{ text: "Why general agencies waste" }, { text: "a screen company's money.", accent: true }],
     paragraphs: [
       "A motorized patio screen is a considered purchase. The homeowner is spending real money on a space they want to use more: no bugs, less heat, less wind, more privacy. A general agency doesn't know that, so it runs ads that could be selling gutters or a pool cage, and then it reports on clicks.",
       "Outdoor screen company marketing also has problems that an agency used to selling a $200 service never has to think about.",
@@ -180,8 +180,8 @@ export const exteriorPage: NichePage = {
     ],
   },
   whatWeRun: {
-    eyebrow: "02 / WHAT WE RUN",
-    title: "Facebook ads for motorized screen companies.",
+    label: "WHAT WE RUN",
+    title: [{ text: "Facebook ads for" }, { text: "motorized screen companies.", accent: true }],
     paragraphs: [
       "This product sells on what people can see. Facebook and Instagram let you show homeowners in your service area what a covered patio looks like when the screens come down at the push of a button. That's why patio screen marketing works so well there, and it's where we start.",
       "We write and produce the ads for your market and your product line:",
@@ -204,8 +204,8 @@ export const exteriorPage: NichePage = {
     ],
   },
   whoWeWorkWith: {
-    eyebrow: "03 / WHO WE WORK WITH",
-    title: "Screen specialists and dealers who added exterior.",
+    label: "WHO WE WORK WITH",
+    title: [{ text: "Screen specialists" }, { text: "and dealers who added exterior.", accent: true }],
     paragraphs: [
       "We work with owner-operators across the U.S., typically doing $500K or more a year. It doesn't matter whether screens are your whole business or a line you added to an interior shop.",
     ],
@@ -221,8 +221,8 @@ export const exteriorPage: NichePage = {
     ],
   },
   extra: {
-    eyebrow: "04 / SEASONALITY",
-    title: "Exterior is seasonal. Your marketing should know that.",
+    label: "SEASONALITY",
+    title: [{ text: "Exterior is seasonal." }, { text: "Your marketing should know that.", accent: true }],
     paragraphs: [
       "In much of the country, screen demand follows the weather. Buyers wake up in spring, your calendar fills, and by the time you feel the rush, you've already lost weeks. In the off-season, the phone goes quiet and you wonder how you'll keep the crew busy.",
       "We plan around your season and your capacity. In peak months, the goal is a full calendar without overwhelming your crew. Before peak, the goal is to have work lined up early. In markets with a long season, like Florida, there's less of a slow period to wait out. On the discovery call we'll look at your market and tell you what's realistic for it.",
@@ -230,22 +230,22 @@ export const exteriorPage: NichePage = {
     ],
   },
   caseStudy: {
-    eyebrow: "05 / RESULTS",
-    title: "$1M+ in 10 months, on under $15K in ad spend.",
+    label: "RESULTS",
+    title: [{ text: "$1M+ in 10 months," }, { text: "on under $15K in ad spend.", accent: true }],
     intro: "Motorized Screens of Orlando sells and installs exterior motorized screens across the Orlando market.",
   },
   process: {
-    eyebrow: "06 / THE PROCESS",
-    title: "Five steps from first call to first leads.",
+    label: "THE PROCESS",
+    title: [{ text: "Five steps from first call" }, { text: "to first leads.", accent: true }],
     intro: "Launch is about 3 days after onboarding, and first leads typically come in within 24 hours of launch.",
     link: "See the full process",
   },
   crossLink: {
-    title: "Also sell blinds and shades?",
+    title: [{ text: "Also sell" }, { text: "blinds and shades?", accent: true }],
     body: "We run interior as a separate effort so each product gets the right message.",
     label: "Marketing for window treatment companies",
     href: "/window-treatment-marketing",
   },
-  faq: { eyebrow: "FAQ", title: "Screen company marketing questions." },
-  cta: { title: "Ready to book more screen jobs?", note: "Takes 30 seconds." },
+  faq: { label: "FAQ", title: [{ text: "Screen company" }, { text: "marketing questions.", accent: true }] },
+  cta: { title: [{ text: "Ready to book" }, { text: "more screen jobs?", accent: true }], note: "Takes 30 seconds." },
 };

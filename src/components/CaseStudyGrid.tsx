@@ -4,7 +4,7 @@ import { useState } from "react";
 import { caseStudies, type Niche } from "@/content/caseStudies";
 import { caseStudiesCopy } from "@/content/results";
 import { cn } from "@/lib/cn";
-import { CaseStudyCard } from "./CaseStudyCard";
+import { VideoCard } from "./VideoCard";
 
 type Filter = "all" | Niche;
 
@@ -24,8 +24,8 @@ export function CaseStudyGrid() {
             aria-pressed={filter === option}
             onClick={() => setFilter(option)}
             className={cn(
-              "min-h-11 rounded-sm border px-4 font-mono text-xs font-medium uppercase tracking-[0.12em] transition-colors",
-              filter === option ? "border-lime bg-lime text-obsidian" : "border-line text-muted hover:border-accent hover:text-accent",
+              "mono-pill min-h-11 px-5 transition-colors",
+              filter === option ? "!border-lime !bg-lime !text-obsidian" : "hover:!border-lime hover:!text-bone",
             )}
           >
             {caseStudiesCopy.filters[option]}
@@ -33,9 +33,9 @@ export function CaseStudyGrid() {
         ))}
       </div>
       {visible.length > 0 ? (
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-5 min-[480px]:grid-cols-2 lg:grid-cols-4">
           {visible.map((study) => (
-            <CaseStudyCard key={study.slug} study={study} />
+            <VideoCard key={study.slug} study={study} headingAs="h2" />
           ))}
         </div>
       ) : (

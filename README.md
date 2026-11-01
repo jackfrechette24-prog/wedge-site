@@ -128,12 +128,25 @@ All copy lives in `src/content/`.
 
 | To change | Edit |
 | --- | --- |
-| Hero headline | `ACTIVE_HERO` in `site.ts` (`"A"`, `"B"`, or `"C"`) |
+| Hero headline | `HERO_VARIANTS` and `ACTIVE_HERO` in `site.ts` (`"A"`, `"B"`, or `"C"`) |
 | System name | `SYSTEM_NAME` in `site.ts` |
-| Stats, terms, nav, social links, client logos | `site.ts` |
-| Home, How It Works, niche pages | `home.ts`, `howItWorks.ts`, `nichePages.ts` |
+| Hero stat cards, terms, nav, social links | `site.ts` |
+| Founder photo, story, and stats | `FOUNDER` in `site.ts` |
+| Home sections | `home.ts` |
+| 5 steps and How It Works page | `howItWorks.ts` |
+| Launch timeline panel | `timeline.ts` |
+| Them vs. us comparison | `comparison.ts` |
+| Niche pages | `nichePages.ts` |
 | Form, booking, confirmation copy | `flow.ts` |
 | Privacy and terms | `legal.ts` |
+
+**Headlines** are lists of segments. Each segment sits on its own line, and `accent: true` sets it in the italic serif:
+
+```ts
+[{ text: "MAKE YOUR CALENDAR" }, { text: "fill itself.", accent: true }]
+```
+
+To change how every accent phrase looks, edit the one `.accent-text` class in `src/app/globals.css`. Body copy supports `**bold**`, which is used to pick out numbers and punchlines.
 
 **Add a video.** Set any video field to:
 
@@ -148,9 +161,9 @@ All copy lives in `src/content/`.
 }
 ```
 
-Video slots: `HOME_VSL` and `PRECALL_VIDEO` in `site.ts`, `video` on each case study and FAQ. Structured data appears automatically.
+Video slots: `HOME_VSL` and `PRECALL_VIDEO` in `site.ts`, `video` on each case study and FAQ. Structured data appears automatically. Case study cards use `poster` for their image, then fall back to the video thumbnail. Videos open in a 16:9 player regardless of the card shape.
 
-**Add a case study.** Add an object to the array in `caseStudies.ts`. The grid, detail page, sitemap, footer, and share image all update. Stats left `null` are hidden. Put logos in `public/clients/`.
+**Add a case study.** Add an object to the array in `caseStudies.ts`. The grid, detail page, sitemap, and share image all update. Stats left `null` are hidden. Put logos in `public/clients/`.
 
 **Add a FAQ.** Add an object to `faqs.ts`. Its `pages` list controls where it shows. Answers support `**bold**` and `[links](/path)`.
 
@@ -158,8 +171,8 @@ Video slots: `HOME_VSL` and `PRECALL_VIDEO` in `site.ts`, `video` on each case s
 
 ## Pre-launch checklist
 
-- [ ] All placeholders replaced (search the repo for `TODO_` and `[CLIENT LOGO]`)
-- [ ] Remove empty slots from `CLIENT_LOGOS`
+- [ ] All placeholders replaced (search the repo for `TODO_`)
+- [ ] Founder copy and stats reviewed, and every number is accurate
 - [ ] The inbox in `CONTACT_EMAIL` exists and is monitored
 - [ ] Counsel has reviewed privacy and terms, and the "Template" notice is removed from `legal.ts`
 - [ ] All environment variables set on the app and cron services

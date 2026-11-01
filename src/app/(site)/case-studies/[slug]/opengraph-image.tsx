@@ -12,5 +12,5 @@ export function generateStaticParams() {
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const study = getCaseStudy(slug);
-  return renderOgImage(study?.headlineMetric ?? "Case Study", study?.company);
+  return renderOgImage(study?.headline ?? [{ text: "Case Study" }], study?.company);
 }

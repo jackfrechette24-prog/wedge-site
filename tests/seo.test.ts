@@ -71,9 +71,13 @@ describe("structured data", () => {
 });
 
 describe("share images", () => {
-  it("every page has a share image by default", () => {
-    const metadata = pageMetadata(privacySeo, "/privacy");
-    expect(metadata.openGraph?.images).toEqual(["/opengraph-image"]);
-    expect(metadata.twitter?.images).toEqual(["/opengraph-image"]);
+  it("uses the site-wide image only when asked, so a page's own image isn't overridden", () => {
+    const withDefault = pageMetadata(privacySeo, "/privacy", { defaultImage: true });
+    expect(withDefault.openGraph?.images).toEqual(["/opengraph-image"]);
+    expect(withDefault.twitter?.images).toEqual(["/opengraph-image"]);
+
+    const ownImage = pageMetadata(howItWorksSeo, "/how-it-works");
+    expect(ownImage.openGraph?.images).toBeUndefined();
+    expect(ownImage.twitter?.images).toBeUndefined();
   });
 });

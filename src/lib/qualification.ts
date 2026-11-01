@@ -36,6 +36,13 @@ export function progressFor(step: FlowStep) {
   return PROGRESS[step];
 }
 
+const STEP_NUMBER: Record<FlowStep, number> = { q1: 1, q2: 2, q3: 3, contact: 4 };
+export const TOTAL_STEPS = 4;
+
+export function stepNumberFor(step: FlowStep) {
+  return STEP_NUMBER[step];
+}
+
 export type Qualification = { qualified: boolean; path: string };
 
 /** The server's own verdict on the answers. Never trust the client's. */

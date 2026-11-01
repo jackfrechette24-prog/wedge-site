@@ -1,38 +1,30 @@
 import { faqsForPage, type FaqPage } from "@/content/faqs";
+import { FAQ_SIDE_LINE } from "@/content/home";
+import { CTAS } from "@/content/site";
+import type { Segments } from "@/content/types";
 import { faqJsonLd, videoJsonLd } from "@/lib/seo";
-import { Accordion, AccordionItem } from "./Accordion";
+import { ButtonLink } from "./Button";
+import { FAQAccordion } from "./FAQAccordion";
 import { JsonLd } from "./JsonLd";
 import { Section } from "./Section";
-import { SimpleMarkdown } from "./SimpleMarkdown";
-import { VideoPlayer } from "./VideoPlayer";
 
-type Props = {
-  page: FaqPage;
-  eyebrow: string;
-  title: string;
-  tone?: "dark" | "graphite" | "light";
-  id?: string;
-};
+type Props = { page: FaqPage; label: string; title: Segments; id?: string };
 
-export function FaqSection({ page, eyebrow, title, tone = "dark", id }: Props) {
+export function FaqSection({ page, label, title, id }: Props) {
   const items = faqsForPage(page);
   const videos = items.map((faq) => videoJsonLd(faq.video)).filter((video) => video !== null);
 
   return (
-    <Section tone={tone} id={id} eyebrow={eyebrow} title={title}>
+    <Section
+      split
+      id={id}
+      label={label}
+      title={title}
+      intro={FAQ_SIDE_LINE}
+      actions={<ButtonLink href={CTAS.primary.href} arrow>{CTAS.primary.label}</ButtonLink>}
+    >
       <JsonLd data={[faqJsonLd(items), ...videos]} />
-      <Accordion>
-        {items.map((faq) => (
-          <AccordionItem key={faq.id} title={faq.question}>
-            <SimpleMarkdown text={faq.answer} />
-            {faq.video && (
-              <div className="mt-5">
-                <VideoPlayer video={faq.video} />
-              </div>
-            )}
-          </AccordionItem>
-        ))}
-      </Accordion>
+      <FAQAccordion items={items} />
     </Section>
   );
 }

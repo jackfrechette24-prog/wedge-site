@@ -1,22 +1,14 @@
 import { RISK_REVERSAL } from "@/content/site";
+import { CheckList } from "./CheckList";
 import { Container } from "./Container";
-import { Eyebrow } from "./Eyebrow";
-import { Reveal } from "./Reveal";
-import { WedgeMark } from "./WedgeMark";
+import { SectionLabel } from "./SectionLabel";
 
-export function RiskStrip({ eyebrow }: { eyebrow?: string }) {
+export function RiskStrip({ label }: { label?: string }) {
   return (
-    <section className="tone-dark border-y border-line py-14 md:py-20">
+    <section className="border-y border-line py-14 lg:py-20">
       <Container>
-        {eyebrow && <Eyebrow className="mb-8">{eyebrow}</Eyebrow>}
-        <div className="grid gap-8 md:grid-cols-3 md:gap-10">
-          {RISK_REVERSAL.map((line, index) => (
-            <Reveal key={line} delay={index * 80} className="flex gap-4">
-              <WedgeMark className="mt-1.5 size-3.5 shrink-0" />
-              <p className="text-xl font-medium leading-snug tracking-[-0.01em]">{line}</p>
-            </Reveal>
-          ))}
-        </div>
+        {label && <SectionLabel className="mb-8">{label}</SectionLabel>}
+        <CheckList items={RISK_REVERSAL} className="grid gap-6 text-lg font-semibold leading-snug md:grid-cols-3 md:space-y-0" />
       </Container>
     </section>
   );
