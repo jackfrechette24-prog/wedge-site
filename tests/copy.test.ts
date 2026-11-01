@@ -25,7 +25,7 @@ function stripComments(source: string) {
 
 describe("copy rules", () => {
   it("has no em or en dashes anywhere in src", () => {
-    const offenders = sourceFiles.filter((file) => /[–—]/.test(readFileSync(file, "utf8")));
+    const offenders = sourceFiles.filter((file) => /[\u2013\u2014]/.test(readFileSync(file, "utf8")));
     expect(offenders).toEqual([]);
   });
 
