@@ -16,7 +16,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
+    "db:migrate": "node scripts/migrate.ts",
     "db:studio": "drizzle-kit studio",
     "mock:webhook": "node scripts/mock-webhook.ts"
   },
