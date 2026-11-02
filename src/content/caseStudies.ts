@@ -85,7 +85,14 @@ export const caseStudies: CaseStudy[] = [
     },
     quote: null, // TODO_QUOTE
     logo: null, // TODO_LOGO
-    video: null, // TODO_VIDEO
+    video: {
+      provider: "youtube",
+      id_or_src: "--QR-9Q9A5A",
+      title: "How We Helped Motorized Screens Orlando Add An Additional $1.06M In Projects From Meta Ads",
+      description: "How an Orlando exterior motorized screen company added new projects with Facebook and Instagram ads and booked appointments.",
+      thumbnail: "https://i.ytimg.com/vi/--QR-9Q9A5A/maxresdefault.jpg",
+      uploadDate: "2026-11-02",
+    },
     poster: null, // TODO_POSTER
     featuredOnHome: true,
     publishedAt: "2026-11-01",
@@ -98,9 +105,9 @@ export const caseStudies: CaseStudy[] = [
     city: "Nashville",
     state: "TN",
     niches: ["interior", "exterior"],
-    headlineMetric: "$158K in revenue in the first 60 days",
-    headline: [{ text: "$158K", accent: true }, { text: "IN REVENUE IN THE FIRST 60 DAYS" }],
-    summary: "A Nashville interior shade and exterior retractable screen company generated $158K in revenue in its first 60 days with us.",
+    headlineMetric: "$228K in revenue in 78 days",
+    headline: [{ text: "$228K", accent: true }, { text: "IN REVENUE IN 78 DAYS" }],
+    summary: "A Nashville interior shade and exterior retractable screen company generated $228K in revenue in its first 78 days with us.",
     // TODO_CASE_STUDY: replace with the real story. Where was the business before you started?
     situation: [
       "Lightstyle Solutions sells and installs interior shades and exterior retractable screens in the Nashville market.",
@@ -111,8 +118,8 @@ export const caseStudies: CaseStudy[] = [
       "We tracked the work to closed revenue, so the number that mattered was jobs sold, not clicks.",
     ],
     stats: {
-      revenue: "$158K",
-      timeframe: "60 days",
+      revenue: "$228K",
+      timeframe: "78 days",
       adSpend: null, // TODO
       leads: null, // TODO
       appointments: null, // TODO
@@ -121,7 +128,14 @@ export const caseStudies: CaseStudy[] = [
     },
     quote: null, // TODO_QUOTE
     logo: null, // TODO_LOGO
-    video: null, // TODO_VIDEO
+    video: {
+      provider: "youtube",
+      id_or_src: "mxI9GSeyfCg",
+      title: "How This Window Treatment Company Closed An Additional $228k In Shade Projects From Meta Ads",
+      description: "How a Nashville shade and retractable screen company closed more shade projects with Facebook and Instagram ads and booked appointments.",
+      thumbnail: "https://i.ytimg.com/vi/mxI9GSeyfCg/maxresdefault.jpg",
+      uploadDate: "2026-11-02",
+    },
     poster: null, // TODO_POSTER
     featuredOnHome: true,
     publishedAt: "2026-11-01",

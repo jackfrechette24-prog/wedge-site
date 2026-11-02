@@ -8,7 +8,7 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://wedgeacqui
 export const CONTACT_EMAIL = "hello@wedgeacquisition.com";
 
 // Bump this when you make meaningful content changes. It feeds sitemap.xml.
-export const CONTENT_UPDATED = "2026-11-01";
+export const CONTENT_UPDATED = "2026-11-02";
 
 // The named system. Alternates: "The Booked Install System", "The Project Pipeline",
 // "The Wedge Demand System", "Open Window System".
@@ -34,7 +34,7 @@ export const HERO_SUBHEADLINE =
 // The two floating cards on the hero video.
 export const HERO_BADGES = {
   top: { value: "$1M+", label: "ONE SCREEN CLIENT · 10 MONTHS" },
-  bottom: { value: "$158K", label: "60 DAYS" },
+  bottom: { value: "$228K", label: "78 DAYS" },
 };
 
 export const CTAS = {
