@@ -3,6 +3,7 @@ import type { NichePage } from "@/content/nichePages";
 import { homeCopy } from "@/content/home";
 import { CTAS } from "@/content/site";
 import { ButtonLink } from "./Button";
+import { QualifyButton } from "./qualify/QualifyButton";
 import { CtaBand } from "./CtaBand";
 import { FaqSection } from "./FaqSection";
 import { FeatureCard } from "./FeatureCard";
@@ -57,7 +58,7 @@ export function NichePageTemplate({ page }: { page: NichePage }) {
           ))}
         </div>
         <div className="mt-8 flex flex-wrap gap-3">
-          <ButtonLink href={CTAS.primary.href} arrow>{CTAS.primary.label}</ButtonLink>
+          <QualifyButton arrow />
           <ButtonLink href={CTAS.secondary.href} variant="secondary">{CTAS.secondary.label}</ButtonLink>
         </div>
       </PageHero>

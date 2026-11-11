@@ -1,4 +1,4 @@
-import { ButtonLink } from "@/components/Button";
+import { QualifyButton } from "@/components/qualify/QualifyButton";
 import { CheckList } from "@/components/CheckList";
 import { ComparisonSection } from "@/components/ComparisonSection";
 import { CtaBand } from "@/components/CtaBand";
@@ -10,7 +10,6 @@ import { RiskStrip } from "@/components/RiskStrip";
 import { Section } from "@/components/Section";
 import { TextLink } from "@/components/TextLink";
 import { howItWorksCopy as copy } from "@/content/howItWorks";
-import { CTAS } from "@/content/site";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata(copy.seo, "/how-it-works");
@@ -21,7 +20,7 @@ export default function HowItWorksPage() {
       <PageHero crumbs={[{ name: copy.breadcrumb, path: "/how-it-works" }]} eyebrow={copy.eyebrow} title={copy.h1}>
         <p className="mt-6 max-w-3xl text-lg text-muted">{copy.intro}</p>
         <div className="mt-8">
-          <ButtonLink href={CTAS.primary.href} arrow>{CTAS.primary.label}</ButtonLink>
+          <QualifyButton arrow />
         </div>
       </PageHero>
 

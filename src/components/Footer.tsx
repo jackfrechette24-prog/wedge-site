@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { FOOTER, LOCATION_SHORT, SITE_NAME, SOCIAL_LINKS } from "@/content/site";
+import { CTAS, FOOTER, LOCATION_SHORT, SITE_NAME, SOCIAL_LINKS } from "@/content/site";
 import { Container } from "./Container";
 import { Logo } from "./Logo";
+import { QualifyButton } from "./qualify/QualifyButton";
 
 const LINK = "inline-block py-1 text-sm text-mist transition-colors hover:text-bone";
 
@@ -32,7 +33,11 @@ export function Footer() {
                 <ul>
                   {column.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className={LINK}>{link.label}</Link>
+                      {link.href === CTAS.primary.href ? (
+                        <QualifyButton variant="text" className={LINK}>{link.label}</QualifyButton>
+                      ) : (
+                        <Link href={link.href} className={LINK}>{link.label}</Link>
+                      )}
                     </li>
                   ))}
                 </ul>

@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { CTAS, NAV, SITE_NAME } from "@/content/site";
+import { NAV, SITE_NAME } from "@/content/site";
 import { cn } from "@/lib/cn";
-import { ButtonLink } from "./Button";
+import { QualifyButton } from "./qualify/QualifyButton";
 import { Container } from "./Container";
 import { Logo } from "./Logo";
 
@@ -51,9 +51,7 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-2">
           <div className="hidden sm:block">
-            <ButtonLink href={CTAS.primary.href} arrow className="min-h-10 px-4 py-2 text-sm">
-              {CTAS.primary.label}
-            </ButtonLink>
+            <QualifyButton arrow className="min-h-10 px-4 py-2 text-sm" />
           </div>
           <button
             type="button"
@@ -80,9 +78,7 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            <ButtonLink href={CTAS.primary.href} arrow className="mb-3 mt-4 w-full">
-              {CTAS.primary.label}
-            </ButtonLink>
+            <QualifyButton arrow className="mb-3 mt-4 w-full" onClick={() => setOpen(false)} />
           </Container>
         </nav>
       )}

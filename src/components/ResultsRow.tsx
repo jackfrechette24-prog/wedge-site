@@ -1,7 +1,6 @@
-import { CTAS } from "@/content/site";
 import type { CaseStudy } from "@/content/caseStudies";
 import type { Segments } from "@/content/types";
-import { ButtonLink } from "./Button";
+import { QualifyButton } from "./qualify/QualifyButton";
 import { Headline } from "./Headline";
 import { VideoCard } from "./VideoCard";
 
@@ -27,7 +26,7 @@ export function ResultsRow({ studies, nextCard }: Props) {
           <Headline segments={nextCard.title} as="h3" size={3} />
           <p className="mt-4 text-muted">{nextCard.body}</p>
           <div className="mt-6">
-            <ButtonLink href={CTAS.primary.href} arrow>{CTAS.primary.label}</ButtonLink>
+            <QualifyButton arrow />
           </div>
         </div>
       )}

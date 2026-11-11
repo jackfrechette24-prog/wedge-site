@@ -1,9 +1,8 @@
 import { faqsForPage, type FaqPage } from "@/content/faqs";
 import { FAQ_SIDE_LINE } from "@/content/home";
-import { CTAS } from "@/content/site";
 import type { Segments } from "@/content/types";
 import { faqJsonLd, videoJsonLd } from "@/lib/seo";
-import { ButtonLink } from "./Button";
+import { QualifyButton } from "./qualify/QualifyButton";
 import { FAQAccordion } from "./FAQAccordion";
 import { JsonLd } from "./JsonLd";
 import { Section } from "./Section";
@@ -21,7 +20,7 @@ export function FaqSection({ page, label, title, id }: Props) {
       label={label}
       title={title}
       intro={FAQ_SIDE_LINE}
-      actions={<ButtonLink href={CTAS.primary.href} arrow>{CTAS.primary.label}</ButtonLink>}
+      actions={<QualifyButton arrow />}
     >
       <JsonLd data={[faqJsonLd(items), ...videos]} />
       <FAQAccordion items={items} />

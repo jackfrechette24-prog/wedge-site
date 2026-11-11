@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Antonio, Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/JsonLd";
+import { QualifyModalProvider } from "@/components/qualify/QualifyModal";
 import { FOOTER, SITE_NAME, SITE_URL } from "@/content/site";
 import { organizationJsonLd } from "@/lib/seo";
 import "./globals.css";
@@ -24,7 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en-US" className={`${inter.variable} ${antonio.variable} ${instrument.variable} ${jetbrains.variable}`}>
       <body className="min-h-dvh">
         <JsonLd data={organizationJsonLd()} />
-        {children}
+        <QualifyModalProvider>{children}</QualifyModalProvider>
       </body>
     </html>
   );

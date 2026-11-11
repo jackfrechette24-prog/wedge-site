@@ -65,6 +65,18 @@ export const applyCopy = {
   },
 };
 
+// Used when LEAD_FORM_PROVIDER is "roasform": the popup and the inline form on /apply.
+export const qualifyCopy = {
+  modalLabel: "SEE IF YOU QUALIFY",
+  closeLabel: "Close",
+  loading: "Loading the form",
+  applyBody: "A few quick questions about your company. Takes about a minute.",
+  error: {
+    body: "The form didn't load. Refresh the page, or email us and we'll get back to you personally.",
+    linkLabel: "Email us",
+  },
+};
+
 export const bookSeo: PageSeo = {
   title: "Pick a Time",
   description: "Pick a time for a quick call with Wedge Acquisition.",

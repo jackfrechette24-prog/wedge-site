@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { ButtonLink } from "@/components/Button";
+import { QualifyButton } from "@/components/qualify/QualifyButton";
 import { ComparisonSection } from "@/components/ComparisonSection";
 import { Container } from "@/components/Container";
 import { CtaBand } from "@/components/CtaBand";
@@ -45,7 +46,7 @@ export default function HomePage() {
               <Headline segments={HERO_VARIANTS[ACTIVE_HERO]} as="h1" size={1} />
               <SimpleMarkdown text={HERO_SUBHEADLINE} className="mt-6 text-lg text-muted" />
               <div className="mt-8 flex flex-wrap gap-3">
-                <ButtonLink href={CTAS.primary.href} arrow>{CTAS.primary.label}</ButtonLink>
+                <QualifyButton arrow />
                 <ButtonLink href={CTAS.heroSecondary.href} variant="secondary">{CTAS.heroSecondary.label}</ButtonLink>
               </div>
               <TrustRow items={[homeCopy.trustRow]} className="mt-6" />

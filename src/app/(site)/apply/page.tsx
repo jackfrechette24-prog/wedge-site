@@ -3,8 +3,9 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Container } from "@/components/Container";
 import { Glow } from "@/components/Glow";
 import { Headline } from "@/components/Headline";
-import { applyCopy, applySeo } from "@/content/flow";
-import { CONTACT_EMAIL } from "@/content/site";
+import { RoasFormEmbed } from "@/components/qualify/RoasFormEmbed";
+import { applyCopy, applyHeadline, applySeo, qualifyCopy } from "@/content/flow";
+import { CONTACT_EMAIL, LEAD_FORM_PROVIDER } from "@/content/site";
 import { leadCaptureAvailable } from "@/lib/env";
 import { pageMetadata } from "@/lib/seo";
 
@@ -20,7 +21,15 @@ export default function ApplyPage() {
       <Container className="relative">
         <Breadcrumbs items={[{ name: applySeo.title, path: "/apply" }]} />
         <div className="mt-8">
-          {leadCaptureAvailable() ? (
+          {LEAD_FORM_PROVIDER === "roasform" ? (
+            <div className="mx-auto max-w-[720px]">
+              <Headline segments={applyHeadline} as="h1" size={2} />
+              <p className="mt-5 text-lg text-muted">{qualifyCopy.applyBody}</p>
+              <div className="surface-card featured-card mt-8">
+                <RoasFormEmbed height="min(85vh, 760px)" className="min-h-[600px]" />
+              </div>
+            </div>
+          ) : leadCaptureAvailable() ? (
             <ApplyForm />
           ) : (
             <div className="surface-card featured-card mx-auto max-w-[640px] p-6 md:p-10">

@@ -43,6 +43,17 @@ export const CTAS = {
   heroSecondary: { label: "See Real Results", href: "/#results" },
 } as const;
 
+// Which form every "See If You Qualify" button uses.
+// "roasform": the buttons open the ROASForm popup, and /apply shows the ROASForm inline.
+// "native": the buttons link to /apply and the built-in multi-step form runs exactly as before.
+export const LEAD_FORM_PROVIDER: "roasform" | "native" = "roasform";
+
+export const ROASFORM = {
+  formId: "e847e8-82119c-595ee1",
+  scriptSrc: "https://my.roasform.com/roasform-embed.js",
+  containerId: "roasform-e847e8-82119c-595ee1",
+} as const;
+
 // Word for word. Do not strengthen these.
 export const RISK_REVERSAL = [
   "Month to month. No long-term contracts.",

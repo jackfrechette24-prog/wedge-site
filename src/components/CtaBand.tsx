@@ -1,6 +1,6 @@
-import { CTAS, RISK_REVERSAL } from "@/content/site";
+import { RISK_REVERSAL } from "@/content/site";
 import type { Segments } from "@/content/types";
-import { ButtonLink } from "./Button";
+import { QualifyButton } from "./qualify/QualifyButton";
 import { Container } from "./Container";
 import { Glow } from "./Glow";
 import { Headline } from "./Headline";
@@ -16,7 +16,7 @@ export function CtaBand({ title, note }: { title: Segments; note?: string }) {
           <Headline segments={title} />
           {note && <p className="mt-6 text-lg text-muted">{note}</p>}
           <div className="mt-8">
-            <ButtonLink href={CTAS.primary.href} arrow>{CTAS.primary.label}</ButtonLink>
+            <QualifyButton arrow />
           </div>
           <TrustRow items={RISK_REVERSAL} className="mt-10 justify-center text-left" />
         </Reveal>

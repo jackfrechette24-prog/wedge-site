@@ -17,7 +17,7 @@ export function buttonClass(variant: Variant = "primary", className?: string) {
   return cn(base, variants[variant], className);
 }
 
-function Arrow() {
+export function Arrow() {
   return <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />;
 }
 
