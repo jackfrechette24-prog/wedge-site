@@ -98,7 +98,7 @@ export const FOOTER = {
 // TODO_STATS: confirm these numbers are current. Each one shows exactly as written here.
 export const FOUNDER = {
   /** Path under /public, e.g. "/founder.jpg". null shows the placeholder frame. */
-  image: null as string | null,
+  image: "/founder.jpg" as string | null,
   imageAlt: "Founder of Wedge Acquisition",
   photoLabel: "FOUNDER · ONTARIO, CANADA",
   label: "WHY WE EXIST",
@@ -109,7 +109,7 @@ export const FOUNDER = {
     "That focus is the whole point. **Your market, your products, your calendar.** Nothing else gets our attention.",
   ],
   stats: [
-    { value: "24+", label: "ACTIVE CLIENTS" },
+    { value: "32", label: "ACTIVE CLIENTS" },
     { value: "2", label: "NICHES ONLY" },
     { value: "US", label: "MARKETS SERVED" },
   ],
